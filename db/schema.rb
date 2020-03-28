@@ -10,7 +10,42 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_03_28_173347) do
+ActiveRecord::Schema.define(version: 2020_03_28_180508) do
+
+  create_table "customers", force: :cascade do |t|
+    t.string "name"
+    t.string "email"
+    t.string "address"
+    t.string "city"
+    t.integer "province_id", null: false
+    t.string "username"
+    t.string "encrypted_password"
+    t.string "salt"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["province_id"], name: "index_customers_on_province_id"
+  end
+
+  create_table "orders", force: :cascade do |t|
+    t.integer "customer_id", null: false
+    t.datetime "order_date"
+    t.decimal "total_cost"
+    t.string "status"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["customer_id"], name: "index_orders_on_customer_id"
+  end
+
+  create_table "pokemon_orders", force: :cascade do |t|
+    t.integer "pokemon_id", null: false
+    t.integer "order_id", null: false
+    t.integer "quantity"
+    t.decimal "price"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["order_id"], name: "index_pokemon_orders_on_order_id"
+    t.index ["pokemon_id"], name: "index_pokemon_orders_on_pokemon_id"
+  end
 
   create_table "pokemons", force: :cascade do |t|
     t.integer "dex_id"
@@ -29,6 +64,13 @@ ActiveRecord::Schema.define(version: 2020_03_28_173347) do
     t.integer "type_id", null: false
   end
 
+  create_table "provinces", force: :cascade do |t|
+    t.string "name"
+    t.decimal "pst_rate"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
   create_table "types", force: :cascade do |t|
     t.string "name"
     t.text "description"
@@ -37,4 +79,8 @@ ActiveRecord::Schema.define(version: 2020_03_28_173347) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
+  add_foreign_key "customers", "provinces"
+  add_foreign_key "orders", "customers"
+  add_foreign_key "pokemon_orders", "orders"
+  add_foreign_key "pokemon_orders", "pokemons"
 end
