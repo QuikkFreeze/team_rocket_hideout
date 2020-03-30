@@ -1,5 +1,5 @@
 <% @pokemons.each do |pokemon| %>
-  <div class="column is-one-fifth">
+  <div class="column is-one-quarter">
     <div class="card">
       <div class="card-content">
         <div class="media">
@@ -10,7 +10,7 @@
           </div>
           <div class="media-content">
             <p class="subtitle is-7">#<%= pokemon.dex_id %></p>
-            <p class="title is-4"><%= link_to pokemon.name, pokemons_path(pokemon), class: 'char-card-title' %></p>
+            <p class="title is-4"><%= link_to pokemon.name, pokemon_path(pokemon), class: 'char-card-title' %></p>
             <p class="subtitle is-6"><%= pokemon.species %></p>
           </div>
         </div>
@@ -18,10 +18,13 @@
           <p class="subtitle is-5" style="text-align:center;">$<%= pokemon.price %></p>
         </div>
       </div>
-      <footer class="card-footer">
+      <div class="card-footer">
         <% pokemon.types.each do |type| %>
           <%= link_to type.name, types_path(type), class: 'card-footer-item' %>
         <% end %>
+      </div>
+      <footer class="card-footer">
+        <div class="card-footer-item">Add to Cart</div>
       </footer>
     </div>
   </div>
