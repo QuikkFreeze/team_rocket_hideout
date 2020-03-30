@@ -1,0 +1,29 @@
+<%= @pokemons.each do |pokemon| %>
+  <div class="column is-quarter">
+    <div class="card">
+      <div class="card-content">
+        <div class="media">
+          <div class="media-left">
+            <figure class="image">
+              <%= image_tag("#{url_for(pokemon.sprite)}", alt: "#{pokemon.name}_image") %>
+            </figure>
+          </div>
+          <div class="media-content">
+            <p class="title is-4"><%= link_to pokemon.name, pokemon, class: 'char-card-title' %></p>
+            <p class="subtitle is-6">$<%= pokemon.price %></p>
+          </div>
+        </div>
+
+        <div class="content">
+          <%= pokemon.description %>
+          <br>
+        </div>
+      </div>
+        <footer class="card-footer">
+          <%= pokemon.types.each do |type| %>
+            <a href="#" class="card-footer-item"><%= type.name %></a>
+          <% end %>
+        </footer>
+    </div>
+  </div>
+<% end %>
