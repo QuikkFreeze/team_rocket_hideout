@@ -54,6 +54,6 @@ ActiveAdmin.register Pokemon do
         f.input :sprite, as: :file
       end
     end
-    actions
+    f.actions
   end
 end
