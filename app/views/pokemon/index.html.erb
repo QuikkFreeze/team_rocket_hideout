@@ -3,3 +3,5 @@
 <div class="columns is-multiline is-mobile ">
   <%= render partial: 'shared/pokemon_card', object: @pokemons %>
 </div>
+
+<%= paginate @pokemons %>

@@ -9,6 +9,6 @@ class TypingController < ApplicationController
     @typing = Typing.find(params[:id])
     @pokemons = Pokemon.includes(:typings)
                        .where('typings.id = ?', params[:id])
-                       .references(:typings)
+                       .references(:typings).page(params[:page])
   end
 end
