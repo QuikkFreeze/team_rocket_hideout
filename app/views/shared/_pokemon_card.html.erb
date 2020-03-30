@@ -5,7 +5,7 @@
         <div class="media">
           <div class="media-left">
             <figure class="image is-96x96">
-              <%= image_tag("#{pokemon.image}", alt: "#{pokemon.name}_image") %>
+              <%= image_tag("#{url_for(pokemon.image)}", alt: "#{pokemon.name}_image") %>
             </figure>
           </div>
           <div class="media-content">
@@ -20,7 +20,7 @@
       </div>
       <div class="card-footer">
         <% pokemon.typings.each do |typing| %>
-          <%= link_to type.name, typings_path(typing), class: 'card-footer-item' %>
+          <%= link_to typing.name, typings_path(typing), class: 'card-footer-item' %>
         <% end %>
       </div>
       <footer class="card-footer">
