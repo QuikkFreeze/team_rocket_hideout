@@ -1,0 +1,29 @@
+<nav class="navbar navbar-expand-xl is-black fixed-top">
+  <div class="navbar-brand">
+    <%= link_to image_tag("rocket.png", width:"90", height:"100", alt: "nav-picture"), root_path, class: 'navbar-item'%>
+
+    <a role="button" class="navbar-burger burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
+      <span aria-hidden="true"></span>
+      <span aria-hidden="true"></span>
+      <span aria-hidden="true"></span>
+    </a>
+  </div>
+
+  <div id="navbarBasicExample" class="navbar-menu">
+    <div class="navbar-start">
+      <%= link_to "Home", root_path, class: 'navbar-item'%>
+
+      <div class="navbar-item has-dropdown is-hoverable">
+        <a class="navbar-link">
+          Types
+        </a>
+
+        <div class="navbar-dropdown">
+          <%= @all_types.each do |type|%>
+            <%= link_to type.name , type, class: 'navbar-item'%>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+</nav>
