@@ -1,2 +1,17 @@
-<h1>Typing#show</h1>
-<p>Find me in app/views/typing/show.html.erb</p>
+<h1 class="title">All <%= @typing.name %> Type Pokemon</h1>
+
+<div class="box">
+  <article class="media">
+    <div class="media-content">
+      <div class="content">
+        <p>
+          <%= @typing.description %>
+        </p>
+      </div>
+    </div>
+  </article>
+</div>
+
+<div class="columns is-multiline is-mobile ">
+  <%= render partial: 'shared/pokemon_card', object: @pokemons %>
+</div>
