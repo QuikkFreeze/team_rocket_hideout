@@ -13,6 +13,10 @@
 
   <body>
     <%= render partial: 'shared/nav_bar', object: @all_types%>
-    <%= yield %>
+    <section class="section">
+      <div class="container">
+        <%= yield %>
+      </div>
+    </section>
   </body>
 </html>
