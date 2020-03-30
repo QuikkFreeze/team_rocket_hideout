@@ -18,9 +18,9 @@
           <p class="subtitle is-5" style="text-align:center;">$<%= pokemon.price %></p>
         </div>
       </div>
-      <div class="card-footer">
+      <div class="card-footer is-size-6">
         <% pokemon.typings.each do |typing| %>
-          <%= link_to typing.name, typings_path(typing), class: 'card-footer-item' %>
+          <%= link_to typing.name, typings_path(typing), class: "card-footer-item type-icon #{typing.color_class}" %>
         <% end %>
       </div>
       <footer class="card-footer">
