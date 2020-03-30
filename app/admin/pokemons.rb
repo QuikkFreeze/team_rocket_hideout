@@ -5,7 +5,7 @@ ActiveAdmin.register Pokemon do
 
   index do
     selectable_column
-    id_column
+    column :id
     column :name
     column :dex_id, label: 'Dex Id'
     column :price
@@ -18,6 +18,7 @@ ActiveAdmin.register Pokemon do
         link_to t.name, [:admin, t]
       end
     end
+    actions
   end
 
   show do |_pokemon|
