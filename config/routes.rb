@@ -9,8 +9,8 @@ Rails.application.routes.draw do
   get 'type', to: 'type#index', as: 'types'
   get 'type/:id', to: 'type#show', id: /\d+/, as: 'type'
   # resource 'pokemons', only: %i[index show]
-  get 'pokemon', to: 'pokemon#index', as: 'pokemon'
-  get 'pokemon/:id', to: 'pokemon#show', id: /\d+/, as: 'pokemons'
+  get 'pokemon', to: 'pokemon#index', as: 'pokemons'
+  get 'pokemon/:id', to: 'pokemon#show', id: /\d+/, as: 'pokemon'
 
   get 'search', to: 'pokemon#search', as: 'search'
 end
