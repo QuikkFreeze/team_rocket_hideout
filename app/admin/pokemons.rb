@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 ActiveAdmin.register Pokemon do
-  permit_params :name, :dex_id, :species, :height, :weight, :description, :price, :image, :sprite, type_ids: []
+  permit_params :name, :dex_id, :species, :height, :weight, :description, :price, :image, typings: []
 
   index do
     selectable_column
@@ -13,8 +13,8 @@ ActiveAdmin.register Pokemon do
     column :height
     column :weight
     column :description
-    column :types do |pokemon|
-      table_for pokemon.types do
+    column :typings do |pokemon|
+      table_for pokemon.typings do
         column(&:name)
       end
     end
@@ -30,16 +30,16 @@ ActiveAdmin.register Pokemon do
       row :height
       row :weight
       row :description
-      table_for pokemon.types do
-        column 'Types' do |type|
-          link_to type.name, [:admin, type]
+      table_for pokemon.typings do
+        column 'Types' do |typing|
+          link_to typing.name, [:admin, typing]
         end
       end
     end
   end
 
   form do |f|
-    f.inputs 'Add/Edit Pokemon' do
+    f.inputs  do
       f.input :name
       f.input :dex_id, label: 'Dex Id'
       f.input :price
@@ -47,11 +47,8 @@ ActiveAdmin.register Pokemon do
       f.input :height
       f.input :weight
       f.input :description
-      f.input :types, as: :select, label: 'Primary Type', input_html: { multiple: false }
-      f.input :types, as: :select, label: 'Secondary Type', input_html: { multiple: false }, include_blank: true
-      f.input :image
       f.inputs do
-        f.input :sprite, as: :file
+        f.input :image, as: :file
       end
     end
     f.actions

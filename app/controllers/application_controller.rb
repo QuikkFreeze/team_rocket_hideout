@@ -4,6 +4,6 @@ class ApplicationController < ActionController::Base
   before_action :all_types
 
   def all_types
-    @all_types = Type.all
+    @all_types = Typing.all
   end
 end

@@ -1,7 +1,8 @@
 # frozen_string_literal: true
 
 class Pokemon < ApplicationRecord
-  has_and_belongs_to_many :types
+  has_many :pokemon_typings
+  has_many :typings, through: :pokemon_typings
 
   has_one_attached :sprite
 

@@ -1,13 +1,13 @@
 require 'test_helper'
 
-class TypeControllerTest < ActionDispatch::IntegrationTest
+class TypingControllerTest < ActionDispatch::IntegrationTest
   test "should get index" do
-    get type_index_url
+    get typing_index_url
     assert_response :success
   end
 
   test "should get show" do
-    get type_show_url
+    get typing_show_url
     assert_response :success
   end
 

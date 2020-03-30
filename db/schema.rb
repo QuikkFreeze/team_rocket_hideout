@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_03_28_193813) do
+ActiveRecord::Schema.define(version: 2020_03_30_164341) do
 
   create_table "active_admin_comments", force: :cascade do |t|
     t.string "namespace"
@@ -94,6 +94,15 @@ ActiveRecord::Schema.define(version: 2020_03_28_193813) do
     t.index ["pokemon_id"], name: "index_pokemon_orders_on_pokemon_id"
   end
 
+  create_table "pokemon_typings", force: :cascade do |t|
+    t.integer "pokemon_id", null: false
+    t.integer "typing_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["pokemon_id"], name: "index_pokemon_typings_on_pokemon_id"
+    t.index ["typing_id"], name: "index_pokemon_typings_on_typing_id"
+  end
+
   create_table "pokemons", force: :cascade do |t|
     t.integer "dex_id"
     t.string "name"
@@ -107,11 +116,6 @@ ActiveRecord::Schema.define(version: 2020_03_28_193813) do
     t.string "image"
   end
 
-  create_table "pokemons_types", id: false, force: :cascade do |t|
-    t.integer "pokemon_id", null: false
-    t.integer "type_id", null: false
-  end
-
   create_table "provinces", force: :cascade do |t|
     t.string "name"
     t.decimal "pst_rate"
@@ -119,10 +123,10 @@ ActiveRecord::Schema.define(version: 2020_03_28_193813) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
-  create_table "types", force: :cascade do |t|
+  create_table "typings", force: :cascade do |t|
     t.string "name"
     t.text "description"
-    t.string "color"
+    t.string "color_class"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end
@@ -132,4 +136,6 @@ ActiveRecord::Schema.define(version: 2020_03_28_193813) do
   add_foreign_key "orders", "customers"
   add_foreign_key "pokemon_orders", "orders"
   add_foreign_key "pokemon_orders", "pokemons"
+  add_foreign_key "pokemon_typings", "pokemons"
+  add_foreign_key "pokemon_typings", "typings"
 end
