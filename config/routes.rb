@@ -1,5 +1,16 @@
+# frozen_string_literal: true
+
 Rails.application.routes.draw do
   devise_for :admin_users, ActiveAdmin::Devise.config
   ActiveAdmin.routes(self)
-  # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
+
+  root to: 'pokemon#index'
+
+  get 'type', to: 'type#index', as: 'types'
+  get 'type/:id', to: 'type#show', id: /\d+/, as: 'type'
+  # resource 'pokemons', only: %i[index show]
+  get 'pokemon', to: 'pokemon#index', as: 'pokemon'
+  get 'pokemon/:id', to: 'pokemon#show', id: /\d+/, as: 'pokemons'
+
+  get 'search', to: 'pokemon#search', as: 'search'
 end
