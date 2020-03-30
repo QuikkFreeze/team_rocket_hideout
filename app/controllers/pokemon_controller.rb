@@ -10,15 +10,15 @@ class PokemonController < ApplicationController
   end
 
   def search
-    @pokemons = Pokemon.where('pokemons.name LIKE ?',
-                              "%#{params[:search_term]}%")
+    @pokemons = Pokemon.where('pokemons.name LIKE ? OR pokemons.description LIKE ?',
+                              "%#{params[:search_term]}%", "%#{params[:search_term]}%")
 
     unless params[:selected_type].empty?
-      @type = Type.find_by(id: params[:selected_type])
+      @type = Typing.find_by(id: params[:selected_type])
 
-      @pokemons = pokemons.includes(:types)
-                          .where('types.id = ?', params[:selected_type])
-                          .references(:types)
+      @pokemons = @pokemons.includes(:typings)
+                           .where('typings.id = ?', params[:selected_type])
+                           .references(:typings)
     end
   end
 end
