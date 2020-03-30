@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 ActiveAdmin.register Pokemon do
-  permit_params :name, :dex_id, :species, :height, :weight, :description, :price, :image, typings: []
+  permit_params :name, :dex_id, :species, :height, :weight, :description, :price, :image, pokemon_typings_attributes: %i[id pokemon_id typing_id _destroy]
 
   index do
     selectable_column
@@ -14,14 +14,13 @@ ActiveAdmin.register Pokemon do
     column :weight
     column :description
     column :typings do |pokemon|
-      table_for pokemon.typings do
-        column(&:name)
+      pokemon.typings do |t|
+        link_to t.name, [:admin, t]
       end
     end
-    column :image
   end
 
-  show do
+  show do |_pokemon|
     attributes_table do
       row :name
       row :dex_id, label: 'Dex Id'
@@ -30,9 +29,9 @@ ActiveAdmin.register Pokemon do
       row :height
       row :weight
       row :description
-      table_for pokemon.typings do
-        column 'Types' do |typing|
-          link_to typing.name, [:admin, typing]
+      row :typings do |pokemon|
+        pokemon.typings do |t|
+          link_to t.name, [:admin, t]
         end
       end
     end
@@ -47,6 +46,9 @@ ActiveAdmin.register Pokemon do
       f.input :height
       f.input :weight
       f.input :description
+      f.has_many :pokemon_typings, allow_destroy: true do |n_f|
+        n_f.input :typing
+      end
       f.inputs do
         f.input :image, as: :file
       end
