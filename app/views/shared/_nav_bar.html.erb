@@ -19,7 +19,7 @@
         </a>
 
         <div class="navbar-dropdown">
-          <%= @all_types.each do |type|%>
+          <% @all_types.each do |type|%>
             <%= link_to type.name , type, class: 'navbar-item'%>
           <% end %>
         </div>
