@@ -1,13 +1,12 @@
 # frozen_string_literal: true
 
 Rails.application.routes.draw do
-  get 'typing/index'
-  get 'typing/show'
   devise_for :admin_users, ActiveAdmin::Devise.config
   ActiveAdmin.routes(self)
 
   root to: 'pokemon#index'
 
+  get 'page/show'
   get 'typing', to: 'typing#index', as: 'typings'
   get 'typing/:id', to: 'typing#show', id: /\d+/, as: 'typing'
   # resource 'pokemons', only: %i[index show]
