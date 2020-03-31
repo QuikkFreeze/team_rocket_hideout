@@ -2,4 +2,9 @@
 
 class Province < ApplicationRecord
   has_many :customers
+
+  validates :name, :pst_rate, :gst_rate, :hst_rate, presence: true
+  validates :pst_rate, :gst_rate, :hst_rate, numericality: true
+  validates :name, format: { with: /\A[a-zA-Z]+\z/,
+                             message: 'only allows letters' }
 end

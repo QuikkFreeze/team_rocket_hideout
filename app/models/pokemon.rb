@@ -9,4 +9,12 @@ class Pokemon < ApplicationRecord
 
   has_many :pokemon_orders
   has_many :orders, through: :pokemon_orders
+
+  validates :name, :dex_id, :species, :height, :weight,
+            :description, :price, presence: true
+  validates :name, :species, :description, length: { minimum: 2}
+  validates :price, numericality: true
+  validates :dex_id, numericality: { only_integer: true }
+  validates :name, :species, format: { with: /\A[a-zA-Z]+\z/,
+                                       message: 'only allows letters' }
 end
