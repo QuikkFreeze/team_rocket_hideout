@@ -8,9 +8,8 @@ class TypingController < ApplicationController
   def show
     @typing = Typing.find(params[:id])
 
-    # @pokemons = Pokemon.includes(:typings).joins(:typings).where('typings.id = ?', params[:id]).page(params[:page])
     @pokemons = Pokemon.includes(:typings)
-                       .where('typings.id = ?', params[:id])
-                       .references(:typings).page(params[:page])
+                       .left_joins(:pokemon_typings)
+                       .where('pokemon_typings.typing_id = ?', params[:id]).page(params[:page])
   end
 end

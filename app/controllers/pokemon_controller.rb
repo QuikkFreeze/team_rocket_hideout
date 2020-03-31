@@ -16,10 +16,9 @@ class PokemonController < ApplicationController
     unless params[:selected_type].empty?
       @typing = Typing.find_by(id: params[:selected_type])
 
-      # @pokemons = @pokemons.joins(:typings).where('typings.id = ?', params[:selected_type]).page(params[:page])
       @pokemons = @pokemons.includes(:typings)
-                           .where('typings.id = ?', params[:selected_type])
-                           .references(:typings).page(params[:page])
+                           .left_joins(:pokemon_typings)
+                           .where('pokemon_typings.typing_id = ?', params[:selected_type])
     end
   end
 end
