@@ -12,9 +12,9 @@ class Pokemon < ApplicationRecord
 
   validates :name, :dex_id, :species, :height, :weight,
             :description, :price, presence: true
-  validates :name, :species, :description, length: { minimum: 2}
+  validates :name, :species, :description, length: { minimum: 2 }
   validates :price, numericality: true
   validates :dex_id, numericality: { only_integer: true }
-  validates :name, :species, format: { with: /\A[a-zA-Z]+\z/,
-                                       message: 'only allows letters' }
+  validates :species, format: { with: /\A[^0-9]*\z/,
+                                message: 'only allows non-numeric characters' }
 end
