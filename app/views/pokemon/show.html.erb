@@ -43,7 +43,7 @@
   </tr>
   <tr>
     <th class="is-size-4">Price</th>
-    <td class="has-text-centered is-size-5"><%= @pokemon.price %></td>
+    <td class="has-text-centered is-size-5"><%= number_to_currency(@pokemon.price) %></td>
   </tr>
   </tbody>
 </table>

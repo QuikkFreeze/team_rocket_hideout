@@ -5,7 +5,7 @@
         <div class="media">
           <div class="media-left">
             <figure class="image is-96x96">
-              <%= image_tag("#{url_for(pokemon.image)}", alt: "#{pokemon.name}_image") %>
+              <%= link_to image_tag("#{url_for(pokemon.image)}", alt: "#{pokemon.name}_image"), pokemon_path(pokemon) %>
             </figure>
           </div>
           <div class="media-content">
@@ -15,7 +15,7 @@
           </div>
         </div>
         <div class="content">
-          <p class="subtitle is-5" style="text-align:center;">$<%= pokemon.price %></p>
+          <p class="subtitle is-5" style="text-align:center;"><%= number_to_currency(pokemon.price) %></p>
         </div>
       </div>
       <div class="card-footer is-size-5">

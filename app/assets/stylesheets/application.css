@@ -57,11 +57,11 @@
 }
 
 .type-flying {
-  color: #89f;
+  background-color: #89f;
 }
 
 .itype-flying {
-  background-color: #89f;
+  color: #89f;
 }
 
 .type-dark {
