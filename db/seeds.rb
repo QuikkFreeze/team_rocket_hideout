@@ -16,14 +16,14 @@ tax_rates = {
   'Alberta' => { 'pst_rate' => 0.0, 'hst_rate' => 0.0 },
   'British Columbia' => { 'pst_rate' => 0.07, 'hst_rate' => 0.0 },
   'Manitoba' => { 'pst_rate' => 0.07, 'hst_rate' => 0.0 },
-  'New Brunswick' => { 'pst_rate' => 0.0, 'hst_rate' => 0.15 },
+  'New-Brunswick' => { 'pst_rate' => 0.0, 'hst_rate' => 0.15 },
   'Newfoundland and Laborador' => { 'pst_rate' => 0.0, 'hst_rate' => 0.15 },
   'Northwest Territories' => { 'pst_rate' => 0.0, 'hst_rate' => 0.0 },
   'Nova Scotia' => { 'pst_rate' => 0.0, 'hst_rate' => 0.15 },
   'Nunavut' => { 'pst_rate' => 0.0, 'hst_rate' => 0.0 },
   'Ontario' => { 'pst_rate' => 0.0, 'hst_rate' => 0.13 },
   'Prince Edward Island' => { 'pst_rate' => 0.0, 'hst_rate' => 0.15 },
-  'Quebec' => { 'pst_rate' => 0.09975, 'hst_rate' => 0.0 },
+  'Québec' => { 'pst_rate' => 0.09975, 'hst_rate' => 0.0 },
   'Saskatchewan' => { 'pst_rate' => 0.06, 'hst_rate' => 0.0 },
   'Yukon' => { 'pst_rate' => 0.0, 'hst_rate' => 0.0 }
 }
