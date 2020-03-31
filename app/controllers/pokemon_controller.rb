@@ -6,7 +6,7 @@ class PokemonController < ApplicationController
   end
 
   def show
-    @pokemon = Pokemon.find(params[:id])
+    @pokemon = Pokemon.friendly.find(params[:id])
   end
 
   def search
