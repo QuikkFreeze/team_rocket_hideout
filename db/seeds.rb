@@ -9,6 +9,7 @@
 #   Character.create(name: 'Luke', movie: movies.first)
 
 require 'open-uri'
+require 'faker'
 
 # Province.destroy_all
 # AdminUser.destroy_all
@@ -89,12 +90,15 @@ pokemon_list.each do |pokemon|
   pokedex_entry_table = pokedex_entry_list.at_css('table').at_css('tbody')
   pokemon_description = pokedex_entry_table.at_css('tr:nth-last-child(2)').at_css('td').content
 
+  pokemon_price = Faker::Number.decimal(l_digits: 3, r_digits: 2)
+
   p = Pokemon.find_or_create_by(name: pokemon_name,
                                 dex_id: dex_number,
                                 species: pokemon_species,
                                 description: pokemon_description,
                                 height: pokemon_height,
-                                weight: pokemon_weight)
+                                weight: pokemon_weight,
+                                price: pokemon_price)
 
   puts p.errors.messages.inspect
 
@@ -134,9 +138,7 @@ pokemon_list.each do |pokemon|
     p.typings << t
   end
 
-  count += 1
   sleep(1)
-  break if count > 5
 end
 
 puts "Created #{Province.count} Provinces"
