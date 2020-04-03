@@ -59,6 +59,20 @@ pokemon_list.each do |pokemon|
   link = pokemon.at_css('a')
   pokemon_name = link.content
   pokemon_url = pokemon_db_url + link.attribute('href').content
+
+  pokemon_page_html = open(pokemon_url.to_s).read
+  pokemon_page_doc = Nokogiri::HTML(pokemon_page_html)
+
+  basics_selector = '.tabset-basics > div:nth-child(2) > div > div:first-child'
+  basics_list = pokemon_page_doc.css(basics_selector)
+
+  pokemon_image = basics_list.at_css('div').at_css('p').at_css('a').attribute('href').content
+
+  pokemon_data_table = basics_list.at_css('div:nth-child(2)').at_css('table').at_css('tbody')
+
+  typings = pokemon_data_table.at_css('tr:nth-child(2)').at_css('td')
+  puts typings
+  break
 end
 
 puts "Created #{Province.count} Provinces"
