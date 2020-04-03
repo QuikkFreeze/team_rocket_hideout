@@ -58,7 +58,6 @@ galar_pokedex_doc = Nokogiri::HTML(galar_pokedex_html)
 pokemon_selector = 'div.infocard-list  div.infocard > span.infocard-lg-data'
 pokemon_list = galar_pokedex_doc.css(pokemon_selector)
 
-count = 0
 # Loop through each pokemon on the pokedex page
 pokemon_list.each do |pokemon|
   dex_number = pokemon.at_css('small').content[1..-1]
@@ -76,8 +75,10 @@ pokemon_list.each do |pokemon|
   basics_selector = '.tabset-basics > div:nth-child(2) > div > div:first-child'
   basics_list = pokemon_page_doc.css(basics_selector)
 
-  pokemon_image = basics_list.at_css('div').at_css('p').at_css('a').attribute('href').content
-
+  begin
+    pokemon_image = basics_list.at_css('div').at_css('p').at_css('a').attribute('href').content
+  rescue StandardError
+  end
   # Grab the table with the pokedex data and the necessary table data
   pokemon_data_table = basics_list.at_css('div:nth-child(2)').at_css('table').at_css('tbody')
   pokemon_typings = pokemon_data_table.at_css('tr:nth-child(2)').at_css('td').css('a')
@@ -85,27 +86,41 @@ pokemon_list.each do |pokemon|
   pokemon_height = pokemon_data_table.at_css('tr:nth-child(4)').at_css('td').content
   pokemon_weight = pokemon_data_table.at_css('tr:nth-child(5)').at_css('td').content
 
+  tab_selector = '/html/body/main/div[3]/div[1]'
   # Grab description from the page
   pokedex_entry_selector = '/html/body/main/div[8]'
   pokedex_entry_list = pokemon_page_doc.xpath(pokedex_entry_selector)
 
-  pokedex_entry_table = pokedex_entry_list.at_css('table').at_css('tbody')
-  pokemon_description = pokedex_entry_table.at_css('tr:nth-last-child(2)').at_css('td').content
+  begin
+    pokedex_entry_table = pokedex_entry_list.at_css('table').at_css('tbody')
+    pokemon_description = pokedex_entry_table.at_css('tr:nth-last-child(2)').at_css('td').content
+  rescue StandardError
+    begin
+      pokedex_entry_selector = '/html/body/main/div[9]'
+      pokedex_entry_list = pokemon_page_doc.xpath(pokedex_entry_selector)
+      pokedex_entry_table = pokedex_entry_list.at_css('table').at_css('tbody')
+      pokemon_description = pokedex_entry_table.at_css('tr:nth-last-child(2)').at_css('td').content
+    rescue StandardError
+      pokemon_description = 'Please manually add description.'
+    end
+  end
 
   pokemon_price = Faker::Number.decimal(l_digits: 3, r_digits: 2)
 
   p = Pokemon.find_or_create_by(name: pokemon_name,
                                 dex_id: dex_number,
                                 species: pokemon_species,
-                                description: pokemon_description,
+                                description: !pokemon_description.empty? ? pokemon_description : 'Please manually add description.',
                                 height: pokemon_height,
                                 weight: pokemon_weight,
                                 price: pokemon_price)
 
   puts p.errors.messages.inspect
 
-  downloaded_image = open(URI.escape(pokemon_image))
-  p.image.attach(io: downloaded_image, filename: "image-#{p.name}.jpg")
+  if pokemon_image.present?
+    downloaded_image = open(URI.escape(pokemon_image))
+    p.image.attach(io: downloaded_image, filename: "image-#{p.name}.jpg")
+  end
 
   # Loop through and create or find typings
   pokemon_typings.each do |pokemon_typing|
@@ -136,9 +151,7 @@ pokemon_list.each do |pokemon|
     p.typings << t
   end
 
-  count += 1
   sleep(1)
-  break if count > 11
 end
 
 puts "Created #{Province.count} Provinces"
