@@ -1,7 +1,7 @@
 <div class="container">
   <div class="columns">
-    <div class="column">
-      <figure class="image">
+    <div class="column is-3">
+      <figure class="image is-4by4">
         <%= image_tag("#{url_for(@pokemon.image)}", alt: "#{@pokemon.name}-picture") %>
       </figure>
     </div>
@@ -14,27 +14,27 @@
         </thead>
         <tbody>
         <tr>
-          <th class="is-size-4">Name</th>
+          <th class="is-size-5">Name</th>
           <td class="has-text-centered is-size-5"><%= @pokemon.name %></td>
         </tr>
         <tr>
-          <th class="is-size-4">Dex Id</th>
+          <th class="is-size-5">Dex Id</th>
           <td class="has-text-centered is-size-5"><%= @pokemon.dex_id %></td>
         </tr>
         <tr>
-          <th class="is-size-4">Species</th>
+          <th class="is-size-5">Species</th>
           <td class="has-text-centered is-size-5"><%= @pokemon.species %></td>
         </tr>
         <tr>
-          <th class="is-size-4">Height</th>
+          <th class="is-size-5">Height</th>
           <td class="has-text-centered is-size-5"><%= @pokemon.height %></td>
         </tr>
         <tr>
-          <th class="is-size-4">Weight</th>
+          <th class="is-size-5">Weight</th>
           <td class="has-text-centered is-size-5"><%= @pokemon.weight %></td>
         </tr>
         <tr>
-          <th class="is-size-4">Types</th>
+          <th class="is-size-5">Types</th>
           <td class="has-text-centered is-size-6">
             <% @pokemon.typings.each do |typing| %>
               <%= link_to typing.name, typing_path(typing), class: "type-icon #{typing.color_class}" %>
@@ -42,12 +42,16 @@
           </td>
         </tr>
         <tr>
-          <th class="is-size-4">Description</th>
-          <td class="has-text-centered is-size-6"><%= @pokemon.description %></td>
+          <th class="is-size-5">Description</th>
+          <td class="has-text-centered is-size-5"><%= @pokemon.description %></td>
         </tr>
         <tr>
-          <th class="is-size-4">Price</th>
+          <th class="is-size-5">Price</th>
           <td class="has-text-centered is-size-5"><%= number_to_currency(@pokemon.price) %></td>
+        </tr>
+        <tr>
+        <th></th>
+        <td class="has-text-centered is-size-5">Add To Cart!</td>
         </tr>
         </tbody>
       </table>
