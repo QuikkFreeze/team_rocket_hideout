@@ -68,6 +68,7 @@ pokemon_list.each do |pokemon|
   pokemon_page_html = open(pokemon_url.to_s).read
   pokemon_page_doc = Nokogiri::HTML(pokemon_page_html)
 
+  puts "Scraping data for #{pokemon_name}"
   # Grab the div with the individual pokemon  data
   basics_selector = '.tabset-basics > div:nth-child(2) > div > div:first-child'
   basics_list = pokemon_page_doc.css(basics_selector)
@@ -87,7 +88,6 @@ pokemon_list.each do |pokemon|
   pokedex_entry_table = pokedex_entry_list.at_css('table').at_css('tbody')
   pokemon_description = pokedex_entry_table.at_css('tr:nth-last-child(2)').at_css('td').content
 
-  pokedex[pokemon_name] = [dex_number, pokemon_image, pokemon_species, pokemon_height, pokemon_weight, pokemon_description]
   count += 1
 
   break if count > 5
