@@ -1,50 +1,56 @@
 <div class="container">
-  <figure class="image is-pulled-left">
-    <%= image_tag("#{url_for(@pokemon.image)}", alt: "#{@pokemon.name}-picture") %>
-  </figure>
-  <table class="table">
-  <thead>
-    <tr>
-      <th class="is-size-3" colspan='3'>Pokémon Information</th>
-    </tr>
-  </thead>
-  <tbody>
-  <tr>
-    <th class="is-size-4">Name</th>
-    <td class="has-text-centered is-size-5"><%= @pokemon.name %></td>
-  </tr>
-  <tr>
-    <th class="is-size-4">Dex Id</th>
-    <td class="has-text-centered is-size-5"><%= @pokemon.dex_id %></td>
-  </tr>
-  <tr>
-    <th class="is-size-4">Species</th>
-    <td class="has-text-centered is-size-5"><%= @pokemon.species %></td>
-  </tr>
-  <tr>
-    <th class="is-size-4">Height</th>
-    <td class="has-text-centered is-size-5"><%= @pokemon.height %></td>
-  </tr>
-  <tr>
-    <th class="is-size-4">Weight</th>
-    <td class="has-text-centered is-size-5"><%= @pokemon.weight %></td>
-  </tr>
-  <tr>
-    <th class="is-size-4">Types</th>
-    <td class="has-text-centered is-size-6">
-      <% @pokemon.typings.each do |typing| %>
-        <%= link_to typing.name, typing_path(typing), class: "type-icon #{typing.color_class}" %>
-      <% end %>
-    </td>
-  </tr>
-  <tr>
-    <th class="is-size-4">Description</th>
-    <td class="has-text-centered is-size-6"><%= @pokemon.description %></td>
-  </tr>
-  <tr>
-    <th class="is-size-4">Price</th>
-    <td class="has-text-centered is-size-5"><%= number_to_currency(@pokemon.price) %></td>
-  </tr>
-  </tbody>
-</table>
+  <div class="columns">
+    <div class="column">
+      <figure class="image">
+        <%= image_tag("#{url_for(@pokemon.image)}", alt: "#{@pokemon.name}-picture") %>
+      </figure>
+    </div>
+    <div class="column">
+      <table class="table">
+        <thead>
+          <tr>
+            <th class="is-size-3" colspan='3'>Pokémon Information</th>
+          </tr>
+        </thead>
+        <tbody>
+        <tr>
+          <th class="is-size-4">Name</th>
+          <td class="has-text-centered is-size-5"><%= @pokemon.name %></td>
+        </tr>
+        <tr>
+          <th class="is-size-4">Dex Id</th>
+          <td class="has-text-centered is-size-5"><%= @pokemon.dex_id %></td>
+        </tr>
+        <tr>
+          <th class="is-size-4">Species</th>
+          <td class="has-text-centered is-size-5"><%= @pokemon.species %></td>
+        </tr>
+        <tr>
+          <th class="is-size-4">Height</th>
+          <td class="has-text-centered is-size-5"><%= @pokemon.height %></td>
+        </tr>
+        <tr>
+          <th class="is-size-4">Weight</th>
+          <td class="has-text-centered is-size-5"><%= @pokemon.weight %></td>
+        </tr>
+        <tr>
+          <th class="is-size-4">Types</th>
+          <td class="has-text-centered is-size-6">
+            <% @pokemon.typings.each do |typing| %>
+              <%= link_to typing.name, typing_path(typing), class: "type-icon #{typing.color_class}" %>
+            <% end %>
+          </td>
+        </tr>
+        <tr>
+          <th class="is-size-4">Description</th>
+          <td class="has-text-centered is-size-6"><%= @pokemon.description %></td>
+        </tr>
+        <tr>
+          <th class="is-size-4">Price</th>
+          <td class="has-text-centered is-size-5"><%= number_to_currency(@pokemon.price) %></td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
 </div>
