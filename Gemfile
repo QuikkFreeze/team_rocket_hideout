@@ -33,6 +33,7 @@ gem 'devise'
 gem 'kaminari'
 gem 'bulma-rails', '~> 0.8.0'
 gem 'bulma-extensions-rails'
+gem 'faker'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
