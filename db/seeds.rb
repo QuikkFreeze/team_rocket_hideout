@@ -77,20 +77,68 @@ pokemon_list.each do |pokemon|
 
   # Grab the table with the pokedex data and the necessary table data
   pokemon_data_table = basics_list.at_css('div:nth-child(2)').at_css('table').at_css('tbody')
-  pokemon_typings = pokemon_data_table.at_css('tr:nth-child(2)').at_css('td')
+  pokemon_typings = pokemon_data_table.at_css('tr:nth-child(2)').at_css('td').css('a')
   pokemon_species = pokemon_data_table.at_css('tr:nth-child(3)').at_css('td').content
   pokemon_height = pokemon_data_table.at_css('tr:nth-child(4)').at_css('td').content
   pokemon_weight = pokemon_data_table.at_css('tr:nth-child(5)').at_css('td').content
 
+  # Grab description from the page
   pokedex_entry_selector = '/html/body/main/div[8]'
   pokedex_entry_list = pokemon_page_doc.xpath(pokedex_entry_selector)
 
   pokedex_entry_table = pokedex_entry_list.at_css('table').at_css('tbody')
   pokemon_description = pokedex_entry_table.at_css('tr:nth-last-child(2)').at_css('td').content
 
-  count += 1
+  p = Pokemon.find_or_create_by(name: pokemon_name,
+                                dex_id: dex_number,
+                                species: pokemon_species,
+                                description: pokemon_description,
+                                height: pokemon_height,
+                                weight: pokemon_weight)
 
+  puts p.errors.messages.inspect
+
+  downloaded_image = open(URI.escape(pokemon_image))
+  p.image.attach(io: downloaded_image, filename: "image-#{p.name}.jpg")
+
+  # Loop through and create or find typings
+  pokemon_typings.each do |pokemon_typing|
+    typing = pokemon_typing.content
+    typing_color = "type-#{typing.downcase}"
+    typing_url = pokemon_db_url + pokemon_typing.attribute('href').content
+
+    t = Typing.find_by(name: typing)
+
+    if t.present?
+      typing_page_html = open(typing_url.to_s).read
+      typing_page_doc = Nokogiri::HTML(typing_page_html)
+
+      typing_selector = '.panel'
+      typing_panel = typing_page_doc.css(typing_selector).css('p')
+
+      p_count = 0
+      typing_description = ''
+      typing_panel.each do |p_tag|
+        typing_description += ' ' if p_count > 0
+
+        typing_description += p_tag.content
+
+        p_count += 1
+      end
+
+      t = Typing.find_or_create_by(name: typing,
+                                   description: typing_description,
+                                   color_class: typing_color)
+    end
+
+    p.typings << t
+  end
+
+  count += 1
+  sleep(1)
   break if count > 5
 end
 
 puts "Created #{Province.count} Provinces"
+puts "Created #{Pokemon.count} Pokemon"
+puts "Created #{Typing.count} Typings"
