@@ -11,38 +11,40 @@
 require 'open-uri'
 require 'faker'
 
-# Province.destroy_all
-# AdminUser.destroy_all
+Province.destroy_all
+AdminUser.destroy_all
+Pokemon.destroy_all
+Typing.destroy_all
 
-# if Rails.env.development?
-#   AdminUser.create!(email: 'admin@example.com', password: 'password', password_confirmation: 'password')
-# end
+if Rails.env.development?
+  AdminUser.create!(email: 'admin@example.com', password: 'password', password_confirmation: 'password')
+end
 
-# GST_RATE = 0.05
-# tax_rates = {
-#   'Alberta' => { 'pst_rate' => 0.0, 'hst_rate' => 0.0 },
-#   'British Columbia' => { 'pst_rate' => 0.07, 'hst_rate' => 0.0 },
-#   'Manitoba' => { 'pst_rate' => 0.07, 'hst_rate' => 0.0 },
-#   'New-Brunswick' => { 'pst_rate' => 0.0, 'hst_rate' => 0.15 },
-#   'Newfoundland and Laborador' => { 'pst_rate' => 0.0, 'hst_rate' => 0.15 },
-#   'Northwest Territories' => { 'pst_rate' => 0.0, 'hst_rate' => 0.0 },
-#   'Nova Scotia' => { 'pst_rate' => 0.0, 'hst_rate' => 0.15 },
-#   'Nunavut' => { 'pst_rate' => 0.0, 'hst_rate' => 0.0 },
-#   'Ontario' => { 'pst_rate' => 0.0, 'hst_rate' => 0.13 },
-#   'Prince Edward Island' => { 'pst_rate' => 0.0, 'hst_rate' => 0.15 },
-#   'Québec' => { 'pst_rate' => 0.09975, 'hst_rate' => 0.0 },
-#   'Saskatchewan' => { 'pst_rate' => 0.06, 'hst_rate' => 0.0 },
-#   'Yukon' => { 'pst_rate' => 0.0, 'hst_rate' => 0.0 }
-# }
+GST_RATE = 0.05
+tax_rates = {
+  'Alberta' => { 'pst_rate' => 0.0, 'hst_rate' => 0.0 },
+  'British Columbia' => { 'pst_rate' => 0.07, 'hst_rate' => 0.0 },
+  'Manitoba' => { 'pst_rate' => 0.07, 'hst_rate' => 0.0 },
+  'New-Brunswick' => { 'pst_rate' => 0.0, 'hst_rate' => 0.15 },
+  'Newfoundland and Laborador' => { 'pst_rate' => 0.0, 'hst_rate' => 0.15 },
+  'Northwest Territories' => { 'pst_rate' => 0.0, 'hst_rate' => 0.0 },
+  'Nova Scotia' => { 'pst_rate' => 0.0, 'hst_rate' => 0.15 },
+  'Nunavut' => { 'pst_rate' => 0.0, 'hst_rate' => 0.0 },
+  'Ontario' => { 'pst_rate' => 0.0, 'hst_rate' => 0.13 },
+  'Prince Edward Island' => { 'pst_rate' => 0.0, 'hst_rate' => 0.15 },
+  'Québec' => { 'pst_rate' => 0.09975, 'hst_rate' => 0.0 },
+  'Saskatchewan' => { 'pst_rate' => 0.06, 'hst_rate' => 0.0 },
+  'Yukon' => { 'pst_rate' => 0.0, 'hst_rate' => 0.0 }
+}
 
-# tax_rates.each do |prov, rate|
-#   Province.create(
-#     name: prov,
-#     pst_rate: rate['hst_rate'] == 0.0 ? rate['pst_rate'] : 0.0,
-#     gst_rate: rate['hst_rate'] == 0.0 ? GST_RATE : 0.0,
-#     hst_rate: rate['hst_rate']
-#   )
-# end
+tax_rates.each do |prov, rate|
+  Province.create(
+    name: prov,
+    pst_rate: rate['hst_rate'] == 0.0 ? rate['pst_rate'] : 0.0,
+    gst_rate: rate['hst_rate'] == 0.0 ? GST_RATE : 0.0,
+    hst_rate: rate['hst_rate']
+  )
+end
 
 # Build pokedex URL
 pokemon_db_url = 'https://pokemondb.net'
@@ -111,34 +113,32 @@ pokemon_list.each do |pokemon|
     typing_color = "type-#{typing.downcase}"
     typing_url = pokemon_db_url + pokemon_typing.attribute('href').content
 
-    t = Typing.find_by(name: typing)
+    typing_page_html = open(typing_url.to_s).read
+    typing_page_doc = Nokogiri::HTML(typing_page_html)
 
-    if t.present?
-      typing_page_html = open(typing_url.to_s).read
-      typing_page_doc = Nokogiri::HTML(typing_page_html)
+    typing_selector = '.panel'
+    typing_panel = typing_page_doc.css(typing_selector).css('p')
 
-      typing_selector = '.panel'
-      typing_panel = typing_page_doc.css(typing_selector).css('p')
+    p_count = 0
+    typing_description = ''
+    typing_panel.each do |p_tag|
+      typing_description += ' '
 
-      p_count = 0
-      typing_description = ''
-      typing_panel.each do |p_tag|
-        typing_description += ' ' if p_count > 0
+      typing_description += p_tag.content
 
-        typing_description += p_tag.content
-
-        p_count += 1
-      end
-
-      t = Typing.find_or_create_by(name: typing,
-                                   description: typing_description,
-                                   color_class: typing_color)
+      p_count += 1
     end
+
+    t = Typing.find_or_create_by(name: typing,
+                                 description: typing_description,
+                                 color_class: typing_color)
 
     p.typings << t
   end
 
+  count += 1
   sleep(1)
+  break if count > 11
 end
 
 puts "Created #{Province.count} Provinces"
