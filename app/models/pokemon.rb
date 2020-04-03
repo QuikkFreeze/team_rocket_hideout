@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class Pokemon < ApplicationRecord
-  has_many :pokemon_typings
+  has_many :pokemon_typings, dependent: :destroy
   has_many :typings, through: :pokemon_typings
   accepts_nested_attributes_for :pokemon_typings, allow_destroy: true
 
