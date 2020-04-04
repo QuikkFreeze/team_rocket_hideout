@@ -86,22 +86,21 @@ pokemon_list.each do |pokemon|
   pokemon_height = pokemon_data_table.at_css('tr:nth-child(4)').at_css('td').content
   pokemon_weight = pokemon_data_table.at_css('tr:nth-child(5)').at_css('td').content
 
-  tab_selector = '/html/body/main/div[3]/div[1]'
   # Grab description from the page
-  pokedex_entry_selector = '/html/body/main/div[8]'
-  pokedex_entry_list = pokemon_page_doc.xpath(pokedex_entry_selector)
+  entry_selector_list = ['/html/body/main/div[7]',
+                         '/html/body/main/div[8]',
+                         '/html/body/main/div[9]',
+                         '/html/body/main/div[10]',
+                         '/html/body/main/div[11]']
+  pokemon_description = ''
 
-  begin
-    pokedex_entry_table = pokedex_entry_list.at_css('table').at_css('tbody')
-    pokemon_description = pokedex_entry_table.at_css('tr:nth-last-child(2)').at_css('td').content
-  rescue StandardError
+  entry_selector_list.each do |selector|
+    pokedex_entry_list = pokemon_page_doc.xpath(selector)
     begin
-      pokedex_entry_selector = '/html/body/main/div[9]'
-      pokedex_entry_list = pokemon_page_doc.xpath(pokedex_entry_selector)
       pokedex_entry_table = pokedex_entry_list.at_css('table').at_css('tbody')
       pokemon_description = pokedex_entry_table.at_css('tr:nth-last-child(2)').at_css('td').content
+      break
     rescue StandardError
-      pokemon_description = 'Please manually add description.'
     end
   end
 
