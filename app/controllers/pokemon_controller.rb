@@ -23,6 +23,11 @@ class PokemonController < ApplicationController
   end
 
   def new_pokemons
-    @pokemons = Pokemon.where(created_at: 5.days.ago..Time.current).page(params[:page])
+    @pokemons = Pokemon.where(created_at: 3.days.ago..Time.current).page(params[:page])
+  end
+
+  def updated_pokemons
+    @pokemons = Pokemon.where(updated_at: 3.days.ago..Time.current)
+                       .where.not(created_at: 3.days.ago..Time.current).page(params[:page])
   end
 end
