@@ -4,7 +4,7 @@
     <div class="media-content">
       <div class="content">
         <p class="is-size-5">
-          <%= @page.content %>
+          <%= (@page.content).html_safe %>
         </p>
       </div>
     </div>
