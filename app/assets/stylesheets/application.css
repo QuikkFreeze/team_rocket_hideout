@@ -14,7 +14,21 @@
  *= require_self
  */
 
- .type-icon {
+.circular-label {
+  min-width: 2em;
+  margin-top: 0.4em;
+  margin-right: 0.5em;
+  margin-bottom: 0.8em;
+  padding: 0.5em;
+  padding-left: 0.4em;
+  line-height: 1em;
+  text-align: center;
+  border-radius: 500em;
+  background-color: #f14668;
+  color:black;
+}
+
+.type-icon {
   display: inline-block;
   width: 106px;
   margin-bottom: 4px;

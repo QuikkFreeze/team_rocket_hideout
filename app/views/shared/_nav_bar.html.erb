@@ -1,6 +1,6 @@
 <nav class="navbar navbar-expand-xl is-black fixed-top">
   <div class="navbar-brand">
-    <%= link_to image_tag("rocket.png", width:"90", height:"100", alt: "nav-picture"), root_path, class: 'navbar-item'%>
+    <%= link_to image_tag("rocket.png", width:"90", height:"110", alt: "nav-picture"), root_path, class: 'navbar-item'%>
 
     <a role="button" class="navbar-burger burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
       <span aria-hidden="true"></span>
@@ -48,6 +48,12 @@
         <div class="buttons">
           <%= render partial: 'pokemon/search_form'%>
         </div>
+      </div>
+      <div class="navbar-item">
+        <%= link_to image_tag("cart.png", alt: "nav-cart"), root_path %>
+        <%= link_to root_path do %>
+          <div class="navbar_item circular-label"><%= session['cart'].count %></div>
+        <% end %>
       </div>
     </div>
   </div>
