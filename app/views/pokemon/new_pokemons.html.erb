@@ -1,0 +1,11 @@
+<h1 class="title">Recently Added Pokémon</h1>
+
+<% if @pokemons.any? %>
+  <div class="columns is-multiline is-mobile ">
+      <%= render partial: 'shared/pokemon_card', object: @pokemons %>
+  </div>
+<% else %>
+  <p>There have been no new Pokémon added recently.</p>
+<% end %>
+
+<%= paginate @pokemons %>

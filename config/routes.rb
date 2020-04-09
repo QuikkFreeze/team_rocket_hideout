@@ -8,9 +8,10 @@ Rails.application.routes.draw do
 
   get 'typing', to: 'typing#index', as: 'typings'
   get 'typing/:id', to: 'typing#show', id: /\d+/, as: 'typing'
-  # resource 'pokemons', only: %i[index show]
+
   get 'pokemon', to: 'pokemon#index', as: 'pokemons'
   get 'pokemon/:id', to: 'pokemon#show', id: /\d+/, as: 'pokemon'
+  get 'new_pokemons', to: 'pokemon#new_pokemons', as: 'new_pokemons'
 
   get 'search', to: 'pokemon#search', as: 'search'
 

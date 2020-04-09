@@ -21,4 +21,8 @@ class PokemonController < ApplicationController
                            .where('pokemon_typings.typing_id = ?', params[:selected_type])
     end
   end
+
+  def new_pokemons
+    @pokemons = Pokemon.where(created_at: 5.days.ago..Time.current).page(params[:page])
+  end
 end
