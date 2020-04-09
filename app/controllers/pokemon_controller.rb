@@ -30,4 +30,11 @@ class PokemonController < ApplicationController
     @pokemons = Pokemon.where(updated_at: 3.days.ago..Time.current)
                        .where.not(created_at: 3.days.ago..Time.current).page(params[:page])
   end
+
+  def add_to_cart
+    id = params[:id].to_i
+
+    session[:cart] << id
+    redirect_back(fallback_location: root_path)
+  end
 end

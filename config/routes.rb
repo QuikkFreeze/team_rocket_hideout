@@ -11,8 +11,11 @@ Rails.application.routes.draw do
 
   get 'pokemon', to: 'pokemon#index', as: 'pokemons'
   get 'pokemon/:id', to: 'pokemon#show', id: /\d+/, as: 'pokemon'
-  get 'new_pokemons', to: 'pokemon#new_pokemons', as: 'new_pokemons'
-  get 'updated_pokemons', to: 'pokemon#updated_pokemons', as: 'updated_pokemons'
+  get 'pokemon/new_pokemons', to: 'pokemon#new_pokemons', as: 'new_pokemons'
+  get 'pokemon/updated_pokemons', to: 'pokemon#updated_pokemons', as: 'updated_pokemons'
+
+  post 'pokemon/add_to_cart/:id', to: 'pokemon#add_to_cart', as: 'add_to_cart'
+  delete 'pokemon/remove_from_cart/:id', to: 'pokemon#remove_from_cart', as: 'remove_from_cart'
 
   get 'search', to: 'pokemon#search', as: 'search'
 

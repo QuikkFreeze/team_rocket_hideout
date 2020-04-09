@@ -9,7 +9,7 @@
       <table class="table">
         <thead>
           <tr>
-            <th class="is-size-3" colspan='3'>Pokémon Information</th>
+            <th class="is-size-3" colspan='2'>Pokémon Information</th>
           </tr>
         </thead>
         <tbody>
@@ -47,7 +47,26 @@
         </tr>
         <tr>
           <th class="is-size-5">Price</th>
-          <td class="has-text-centered is-size-5"><%= number_to_currency(@pokemon.price) %> | Add To Cart!</td>
+          <td class="has-text-centered is-size-5">
+            <div class="field has-addons has-addons-centered">
+                <p class="control">
+                  <span class="tag is-danger is-light is-size-5">
+                    <%= number_to_currency(@pokemon.price) %>
+                  </span>
+                </p>
+                <p class="control">
+                  <% if session[:cart].include? @pokemon.id %>
+                    <button class="button is-success">
+                      <p class="is-size-6"><i class="fas fa-check"></i>  Added to Cart</p>
+                    </button>
+                  <% else %>
+                    <%= button_to add_to_cart_path(@pokemon.id), class: "button is-danger", method: :post do %>
+                      <p class="is-size-6"><i class="fas fa-shopping-cart"></i>    Add to Cart</p>
+                    <% end %>
+                  <% end %>
+                </p>
+              </div>
+            </td>
         </tr>
         </tbody>
       </table>
