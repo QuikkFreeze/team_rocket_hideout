@@ -1,2 +1,58 @@
-<h1>Cart#show</h1>
-<p>Find me in app/views/cart/show.html.erb</p>
+<div class="container">
+  <% if session[:cart].count > 0 %>
+    <div class="box">
+      <h1 class="title">Poké Cart</h1>
+      <div class="columns">
+        <div class="column is-7">
+          <table class="table ">
+            <thead>
+              <tr>
+                <th class="is-size-4" colspan='1'>Items</th>
+                <th class="is-size-4" colspan='2'>Name</th>
+                <th class="is-size-4" colspan='2'>Price</th>
+                <th class="is-size-4" colspan='2'>Quantity</th>
+                <th class="is-size-4" colspan='2'>Total</th>
+                <th class="is-size-4" colspan='2'></th>
+                <th class="is-size-4" colspan='2'></th>
+              </tr>
+            </thead>
+            <tbody>
+              <% @pokemons.each do |pokemon| %>
+                <tr>
+                  <th colspan='1' class="has-text-centered is-size-5">
+                    <%= image_tag("#{url_for(pokemon.image)}", class: "image", alt: "#{pokemon.name}-picture") %>
+                  </th>
+                  <td colspan='2' class="has-text-centered is-size-5"><%= pokemon.name %></td>
+                  <td colspan='2' class="has-text-centered is-size-5"><%= number_to_currency(pokemon.price) %></td>
+                  <td colspan='2' class="has-text-centered is-size-5">Quantity</td>
+                  <td colspan='2' class="has-text-centered is-size-5">Total Price</td>
+                  <td colspan='2' class="has-text-centered is-size-5">
+                    <%= button_to remove_from_cart_path(pokemon.id), class: "button is-danger", method: :delete do %>
+                      <%= image_tag("cart-remove.png", alt: "nav-cart") %> <p class="is-size-5">   Remove</p>
+                    <% end %>
+                  </td>
+                  <td colspan='2' class="has-text-centered is-size-5"></td>
+                </tr>
+              <% end %>
+            </tbody>
+          </table>
+        </div>
+        <div class="column">
+        <%= @sub_total %>
+        </div>
+      </div>
+    </div>
+  <% else %>
+    <div class='box'>
+      <article class="media">
+        <div class="media-content">
+          <div class="content">
+            <p class="is-size-4">
+              Shopping cart is empty.
+            </p>
+          </div>
+        </div>
+      </article>
+    </div>
+  <% end %>
+</div>
