@@ -14,6 +14,7 @@ Rails.application.routes.draw do
   get 'pokemon/new_pokemon', to: 'pokemon#new_pokemon', as: 'new_pokemon'
   get 'pokemon/updated_pokemon', to: 'pokemon#updated_pokemon', as: 'updated_pokemon'
 
+  get 'cart', to: 'cart#show', as: 'cart'
   post 'add_to_cart/:id', to: 'pokemon#add_to_cart', as: 'add_to_cart'
   delete 'remove_from_cart/:id', to: 'pokemon#remove_from_cart', as: 'remove_from_cart'
 
