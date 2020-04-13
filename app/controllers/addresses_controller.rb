@@ -10,6 +10,7 @@ class AddressesController < ApplicationController
   # GET /tests/new
   def new
     @address = Address.new
+    @provinces = Province.all.order(:name)
   end
 
   # GET /tests/1/edit
@@ -19,6 +20,7 @@ class AddressesController < ApplicationController
   # POST /tests.json
   def create
     @address = Address.new(address_params)
+    @provinces = Province.all.order(:name)
 
     respond_to do |format|
       if @address.save
@@ -54,6 +56,6 @@ class AddressesController < ApplicationController
 
   # Never trust parameters from the scary internet, only allow the white list through.
   def address_params
-    params.require(:address).permit(:name, :address, :city, :province_id)
+    params.require(:address).permit(:name, :address, :city, :province_id, :user_id)
   end
 end

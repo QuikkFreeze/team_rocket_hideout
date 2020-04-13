@@ -1,2 +1,5 @@
-<h1>Addresses#new</h1>
-<p>Find me in app/views/addresses/new.html.erb</p>
+<h1>New Test</h1>
+
+<%= render 'form', address: @address %>
+
+<%= link_to 'Back', address_path(current_user.id) %>
