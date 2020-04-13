@@ -15,6 +15,7 @@
     <%= render partial: 'shared/nav_bar', object: @all_types%>
     <section class="section">
       <div class="container">
+        <% render 'layouts/alerts' %>
         <h1 class="title is-1">Team Rocket Hideout</h1>
         <%= yield %>
       </div>
