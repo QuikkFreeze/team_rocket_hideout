@@ -55,7 +55,7 @@
                   </span>
                 </p>
                 <p class="control">
-                  <% if session[:cart].include? @pokemon.id %>
+                  <% if session[:cart].key?(@pokemon.id.to_s) %>
                     <button class="button is-success">
                       <%= image_tag("check-bold.png", alt: "nav-cart") %><p class="is-size-5"><p class="is-size-6"> Added to Cart</p>
                     </button>

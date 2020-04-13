@@ -2,7 +2,7 @@
 
 class CartController < ApplicationController
   def show
-    @pokemons = Pokemon.find(session[:cart])
+    @pokemons = Pokemon.find(session[:cart].keys)
 
     sub_total
   end

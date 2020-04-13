@@ -32,14 +32,14 @@ class PokemonController < ApplicationController
   end
 
   def add_to_cart
-    id = params[:id].to_i
+    id = params[:id].to_s
 
-    session[:cart] << id unless session[:cart].include?(id)
+    session[:cart][id] = 1 unless session[:cart].keys.include?(id)
     redirect_back(fallback_location: root_path)
   end
 
   def remove_from_cart
-    id = params[:id].to_i
+    id = params[:id]
 
     session[:cart].delete(id)
     redirect_back(fallback_location: root_path)

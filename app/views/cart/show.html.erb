@@ -1,47 +1,76 @@
+<%= debug session[:cart] %>
+
 <div class="container">
   <% if session[:cart].count > 0 %>
-    <div class="box">
       <h1 class="title">Poké Cart</h1>
       <div class="columns">
-        <div class="column is-7">
-          <table class="table ">
-            <thead>
-              <tr>
-                <th class="is-size-4" colspan='1'>Items</th>
-                <th class="is-size-4" colspan='2'>Name</th>
-                <th class="is-size-4" colspan='2'>Price</th>
-                <th class="is-size-4" colspan='2'>Quantity</th>
-                <th class="is-size-4" colspan='2'>Total</th>
-                <th class="is-size-4" colspan='2'></th>
-                <th class="is-size-4" colspan='2'></th>
-              </tr>
-            </thead>
-            <tbody>
-              <% @pokemons.each do |pokemon| %>
+        <div class="column is-8">
+          <div class="box">
+            <table class="table ">
+              <thead>
                 <tr>
-                  <th colspan='1' class="has-text-centered is-size-5">
-                    <%= image_tag("#{url_for(pokemon.image)}", class: "image", alt: "#{pokemon.name}-picture") %>
-                  </th>
-                  <td colspan='2' class="has-text-centered is-size-5"><%= pokemon.name %></td>
-                  <td colspan='2' class="has-text-centered is-size-5"><%= number_to_currency(pokemon.price) %></td>
-                  <td colspan='2' class="has-text-centered is-size-5">Quantity</td>
-                  <td colspan='2' class="has-text-centered is-size-5">Total Price</td>
-                  <td colspan='2' class="has-text-centered is-size-5">
-                    <%= button_to remove_from_cart_path(pokemon.id), class: "button is-danger", method: :delete do %>
-                      <%= image_tag("cart-remove.png", alt: "nav-cart") %> <p class="is-size-5">   Remove</p>
-                    <% end %>
-                  </td>
-                  <td colspan='2' class="has-text-centered is-size-5"></td>
+                  <th class="is-size-4" colspan='1'>Items</th>
+                  <th class="is-size-4" colspan='2'>Name</th>
+                  <th class="is-size-4" colspan='2'>Price</th>
+                  <th class="is-size-4" colspan='2'>Quantity</th>
+                  <th class="is-size-4" colspan='2'></th>
+                  <th class="is-size-4" colspan='2'>Total</th>
+                  <th class="is-size-4" colspan='2'></th>
+                  <th class="is-size-4" colspan='2'></th>
                 </tr>
-              <% end %>
-            </tbody>
-          </table>
+              </thead>
+              <tbody>
+                <% @pokemons.each do |pokemon| %>
+                  <tr>
+                    <th colspan='1' class="has-text-centered is-size-5">
+                      <%= image_tag("#{url_for(pokemon.image)}", class: "image", alt: "#{pokemon.name}-picture") %>
+                    </th>
+                    <td colspan='2' class="has-text-centered is-size-5"><%= pokemon.name %></td>
+                    <td colspan='2' class="has-text-centered is-size-5"><%= number_to_currency(pokemon.price) %></td>
+                    <%= form_tag(cart_path) do %>
+                      <td colspan='2' class="has-text-centered is-size-5">
+                        <%= number_field_tag 'quantity', session[:cart][pokemon.id.to_s], min: 1, max: 5, class: "input is-danger" %>
+                      </td>
+                      <td colspan='2' class="has-text-centered is-size-5">
+                        <%= submit_tag("Update", class: "button is-success is-size-6")%>
+                    </td>
+                    <% end %>
+                    <td colspan='2' class="has-text-centered is-size-5"><%= number_to_currency(pokemon.price) %></td>
+                    <td colspan='2' class="has-text-centered is-size-5">
+                      <%= button_to remove_from_cart_path(pokemon.id), class: "button is-danger", method: :delete do %>
+                        <%= image_tag("cart-remove.png", alt: "nav-cart") %> <p class="is-size-6">   Remove</p>
+                      <% end %>
+                    </td>
+                    <td colspan='2' class="has-text-centered is-size-5"></td>
+                  </tr>
+                <% end %>
+              </tbody>
+            </table>
+          </div>
         </div>
         <div class="column">
-        <%= @sub_total %>
+          <div class='box'>
+            <table class='table is-fullwidth'>
+              <thead>
+                <tr>
+                  <th class="is-size-4" colspan='2'>Order Information</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td class='is-size-5'>
+                    SubTotal
+                  </td>
+                  <td class='is-size-5 has-text-centered'>
+                    <%= number_to_currency(@sub_total) %>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+            <%= button_to 'Log In To Purchase', root_path, class: "button is-danger is-size-6", method: :get%>
+          </div>
         </div>
       </div>
-    </div>
   <% else %>
     <div class='box'>
       <article class="media">
