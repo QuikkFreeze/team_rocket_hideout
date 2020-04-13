@@ -1,11 +1,6 @@
 # frozen_string_literal: true
 
 Rails.application.routes.draw do
-  get 'addresses/new'
-  get 'addresses/edit'
-  get 'addresses/show'
-  get 'addresses/create'
-  get 'addresses/update'
   devise_for :users
   devise_for :admin_users, ActiveAdmin::Devise.config
   ActiveAdmin.routes(self)
@@ -20,11 +15,7 @@ Rails.application.routes.draw do
   get 'pokemon/new_pokemon', to: 'pokemon#new_pokemon', as: 'new_pokemon'
   get 'pokemon/updated_pokemon', to: 'pokemon#updated_pokemon', as: 'updated_pokemon'
 
-  get 'address/new', to: 'address#new', as: 'new_address'
-  get 'address/:id/edit', to: 'address#edit', as: 'edit_address'
-  get 'address/:id', to: 'address#show', as: 'show_address'
-  post 'address', to: 'address#create', as: 'create_address'
-  put 'address/:id', to: 'address#update', as: 'update_address'
+  resources :addresses
 
   get 'cart', to: 'cart#show', as: 'cart'
   post 'update_quantity/:id', to: 'cart#update_quantity', as: 'update_quantity'
