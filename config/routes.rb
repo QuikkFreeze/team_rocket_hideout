@@ -1,6 +1,11 @@
 # frozen_string_literal: true
 
 Rails.application.routes.draw do
+  get 'addresses/new'
+  get 'addresses/edit'
+  get 'addresses/show'
+  get 'addresses/create'
+  get 'addresses/update'
   devise_for :users
   devise_for :admin_users, ActiveAdmin::Devise.config
   ActiveAdmin.routes(self)
@@ -17,7 +22,7 @@ Rails.application.routes.draw do
 
   get 'address/new', to: 'address#new', as: 'new_address'
   get 'address/:id/edit', to: 'address#edit', as: 'edit_address'
-  get 'address/:id', to: 'address#show', as: 'address'
+  get 'address/:id', to: 'address#show', as: 'show_address'
   post 'address', to: 'address#create', as: 'create_address'
   put 'address/:id', to: 'address#update', as: 'update_address'
 
