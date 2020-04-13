@@ -15,11 +15,11 @@ Rails.application.routes.draw do
   get 'pokemon/new_pokemon', to: 'pokemon#new_pokemon', as: 'new_pokemon'
   get 'pokemon/updated_pokemon', to: 'pokemon#updated_pokemon', as: 'updated_pokemon'
 
-  get 'address/new', to: 'customer#new', as: 'new_address'
-  get 'address/:id/edit', to: 'customer#edit', as: 'edit_address'
-  get 'account/:id', to: 'customer#show', as: 'account'
-  post 'address', to: 'customer#create', as: 'create_address'
-  put 'address/:id', to: 'customer#update', as: 'update_address'
+  get 'address/new', to: 'address#new', as: 'new_address'
+  get 'address/:id/edit', to: 'address#edit', as: 'edit_address'
+  get 'address/:id', to: 'address#show', as: 'address'
+  post 'address', to: 'address#create', as: 'create_address'
+  put 'address/:id', to: 'address#update', as: 'update_address'
 
   get 'cart', to: 'cart#show', as: 'cart'
   post 'update_quantity/:id', to: 'cart#update_quantity', as: 'update_quantity'

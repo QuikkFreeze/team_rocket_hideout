@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_04_13_172653) do
+ActiveRecord::Schema.define(version: 2020_04_13_210018) do
 
   create_table "active_admin_comments", force: :cascade do |t|
     t.string "namespace"
@@ -47,6 +47,18 @@ ActiveRecord::Schema.define(version: 2020_04_13_172653) do
     t.index ["key"], name: "index_active_storage_blobs_on_key", unique: true
   end
 
+  create_table "addresses", force: :cascade do |t|
+    t.string "name"
+    t.string "address"
+    t.string "city"
+    t.integer "province_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.integer "user_id"
+    t.index ["province_id"], name: "index_addresses_on_province_id"
+    t.index ["user_id"], name: "index_addresses_on_user_id"
+  end
+
   create_table "admin_users", force: :cascade do |t|
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
@@ -57,18 +69,6 @@ ActiveRecord::Schema.define(version: 2020_04_13_172653) do
     t.datetime "updated_at", precision: 6, null: false
     t.index ["email"], name: "index_admin_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_admin_users_on_reset_password_token", unique: true
-  end
-
-  create_table "customers", force: :cascade do |t|
-    t.string "name"
-    t.string "address"
-    t.string "city"
-    t.integer "province_id", null: false
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.integer "user_id"
-    t.index ["province_id"], name: "index_customers_on_province_id"
-    t.index ["user_id"], name: "index_customers_on_user_id"
   end
 
   create_table "friendly_id_slugs", force: :cascade do |t|
@@ -163,9 +163,9 @@ ActiveRecord::Schema.define(version: 2020_04_13_172653) do
   end
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
-  add_foreign_key "customers", "provinces"
-  add_foreign_key "customers", "users"
-  add_foreign_key "orders", "customers"
+  add_foreign_key "addresses", "provinces"
+  add_foreign_key "addresses", "users"
+  add_foreign_key "orders", "addresses", column: "customer_id"
   add_foreign_key "pokemon_orders", "orders"
   add_foreign_key "pokemon_orders", "pokemons"
   add_foreign_key "pokemon_typings", "pokemons"
