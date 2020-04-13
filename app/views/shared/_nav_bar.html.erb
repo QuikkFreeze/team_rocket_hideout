@@ -32,12 +32,25 @@
 
         <div class="navbar-dropdown">
           <%= link_to "New Pokémon", new_pokemon_path, class: 'navbar-item'%>
-
           <%= link_to "Recently Updated Pokémon", updated_pokemon_path, class: 'navbar-item'%>
         </div>
       </div>
 
+      <div class="navbar-item has-dropdown is-hoverable">
+        <a class="navbar-link">
+          Account
+        </a>
 
+        <div class="navbar-dropdown">
+        <div class='navbar-item'>Hello, <%= current_user && current_user.customer.present? ? current_user.customer.name : "Guest"%></div>
+        <% if current_user %>
+          <%= link_to "Sign Out", destroy_user_session_path, class: 'navbar-item', method: :delete %>
+        <% else %>
+          <%= link_to "Sign In", new_user_session_path, class: 'navbar-item'%>
+          <%= link_to "Sign Up", new_user_registration_path, class: 'navbar-item'%>
+        <% end %>
+        </div>
+      </div>
 
       <%= link_to "About", slug_path('about'), class: 'navbar-item'%>
 
