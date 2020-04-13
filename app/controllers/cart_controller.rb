@@ -7,12 +7,20 @@ class CartController < ApplicationController
     sub_total
   end
 
+  def update_quantity
+    id = params[:id].to_s
+
+    session[:cart][id] = params[:quantity].to_i
+    redirect_back(fallback_location: root_path)
+  end
+
   private
 
   def sub_total
     @sub_total = 0
     @pokemons.each do |pokemon|
-      @sub_total += pokemon.price
+      quantity = session[:cart][pokemon.id.to_s]
+      @sub_total += (pokemon.price * quantity)
     end
   end
 end
