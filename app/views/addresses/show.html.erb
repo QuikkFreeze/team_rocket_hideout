@@ -1,2 +1,59 @@
-<h1>Addresses#show</h1>
-<p>Find me in app/views/addresses/show.html.erb</p>
+<div class="container">
+  <div class="columns">
+  <div class="column">
+    <div class="column is-8">
+      <div class="box">
+        <h1 class="title">My Address</h1>
+        <table class="table is-fullwidth">
+        <tbody>
+          <tr>
+            <th class="is-size-5">Name</th>
+            <td class="has-text-centered is-size-5"><%= @address.name %></td>
+          </tr>
+          <tr>
+            <th class="is-size-5">Email</th>
+            <td class="has-text-centered is-size-5"><%= current_user.email %></td>
+          </tr>
+          <tr>
+            <th class="is-size-5">Street</th>
+            <td class="has-text-centered is-size-5"><%= @address.address %></td>
+          </tr>
+          <tr>
+            <th class="is-size-5">City</th>
+            <td class="has-text-centered is-size-5"><%= @address.city %></td>
+          </tr>
+          <tr>
+            <th class="is-size-5">Province</th>
+            <td class="has-text-centered is-size-5"><%= @address.province.name %></td>
+          </tr>
+        </tbody>
+        </table>
+        <div class="buttons is-right">
+          <%= button_to "Edit Address", edit_address_path(current_user.address.id), class: "button is-danger", method: :get %>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="column">
+    <div class="column">
+      <div class="box">
+        <h1 class="title">My Orders</h1>
+        <% if @orders.any? %>
+          <table class="table is-fullwidth">
+            <thead>
+            <tr>
+              <th class="is-size-5">Date</th>
+              <th class="is-size-5">Pokémon</th>
+              <th class="is-size-5">Quantity</th>
+              <th class="is-size-5">Tax</th>
+              <th class="is-size-5">Total</th>
+            </tr>
+            </thead>
+          </table>
+        <% else %>
+          <p class="is-size-5">No orders found.</p>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>
