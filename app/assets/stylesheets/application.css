@@ -13,6 +13,10 @@
  *= require_tree .
  *= require_self
  */
+.address-box {
+  margin: auto;
+  width: 50%;
+}
 
 .circular-label {
   min-width: 2em;

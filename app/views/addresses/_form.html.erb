@@ -1,39 +1,73 @@
-<%= form_with(model: address, local: true) do |form| %>
-  <% if address.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(address.errors.count, "error") %> prohibited this address from being saved:</h2>
+<div class="container">
+  <div class="box address-box">
+    <%= form_with(model: address, local: true) do |form| %>
+      <% if address.errors.any? %>
+        <div id="error_explanation">
+          <h2><%= pluralize(address.errors.count, "error") %> prohibited this address from being saved:</h2>
 
-      <ul>
-        <% address.errors.full_messages.each do |message| %>
-          <li><%= message %></li>
-        <% end %>
-      </ul>
-    </div>
-  <% end %>
+          <ul>
+            <% address.errors.full_messages.each do |message| %>
+              <li><%= message %></li>
+            <% end %>
+          </ul>
+        </div>
+      <% end %>
 
-  <div class="field">
-    <%= form.label :name %>
-    <%= form.text_field :name %>
+      <div class="field">
+        <div>
+          <%= form.label :name, class: 'label' %>
+        </div>
+        <div>
+          <div class="control is-expanded">
+            <%= form.text_field :name, class: 'input'  %>
+          </div>
+        </div>
+      </div>
+
+      <div class="field">
+        <div>
+          <%= form.label "Street", class: 'label' %>
+        </div>
+        <div>
+          <div class="control is-expanded">
+            <%= form.text_field :address, class: 'input' %>
+          </div>
+        </div>
+      </div>
+
+      <div class="field">
+        <div>
+          <%= form.label :city, class: 'label' %>
+        </div>
+        <div>
+          <div class="control is-expanded">
+            <%= form.text_field :city, class: 'input' %>
+          </div>
+        </div>
+      </div>
+
+      <div class="field">
+        <div class="field">
+          <div>
+            <%= form.label :province, class: 'label' %>
+          </div>
+          <div>
+            <div class="control">
+              <div class="select">
+                <%= form.collection_select :province_id, @provinces, :id, :name %>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <%= form.hidden_field :user_id, value: current_user.id %>
+
+        <div class="actions field is-grouped is-grouped-centered">
+          <div class="control">
+            <%= form.submit class: "button is-danger"%>
+          </div>
+        </div>
+      </div>
+    <% end %>
   </div>
-
-  <div class="field">
-    <%= form.label :address %>
-    <%= form.text_field :address %>
-  </div>
-
-  <div class="field">
-    <%= form.label :city %>
-    <%= form.text_field :city %>
-  </div>
-
-  <div class="field">
-    <%= form.label :province %>
-    <%= form.collection_select :province_id, @provinces, :id, :name %>
-  </div>
-
-  <%= form.hidden_field :user_id, value: current_user.id %>
-
-  <div class="actions">
-    <%= form.submit %>
-  </div>
-<% end %>
+</div>
