@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class Order < ApplicationRecord
-  belongs_to :address
+  belongs_to :address, foreign_key: 'customer_id'
 
   has_many :pokemon_orders
   has_many :pokemons, through: :pokemon_orders

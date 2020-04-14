@@ -18,6 +18,8 @@ Rails.application.routes.draw do
   resources :addresses
 
   get 'cart', to: 'cart#show', as: 'cart'
+  get 'checkout', to: 'cart#checkout', as: 'checkout'
+  get 'process_order', to: 'cart#process_order', as: 'process_order'
   post 'update_quantity/:id', to: 'cart#update_quantity', as: 'update_quantity'
   post 'add_to_cart/:id', to: 'pokemon#add_to_cart', as: 'add_to_cart'
   delete 'remove_from_cart/:id', to: 'pokemon#remove_from_cart', as: 'remove_from_cart'
