@@ -37,12 +37,12 @@ class AddressesController < ApplicationController
   # PATCH/PUT /tests/1.json
   def update
     respond_to do |format|
-      if @test.update(test_params)
-        format.html { redirect_to @test, notice: 'Test was successfully updated.' }
-        format.json { render :show, status: :ok, location: @test }
+      if @address.update(address_params)
+        format.html { redirect_to @address, notice: 'Address was successfully updated.' }
+        format.json { render :show, status: :ok, location: @address }
       else
         format.html { render :edit }
-        format.json { render json: @test.errors, status: :unprocessable_entity }
+        format.json { render json: @address.errors, status: :unprocessable_entity }
       end
     end
   end
