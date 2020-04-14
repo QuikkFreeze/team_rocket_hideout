@@ -52,7 +52,7 @@ class AddressesController < ApplicationController
   def set_details
     @address = Address.find(params[:id])
     @provinces = Province.all.order(:name)
-    @orders = Order.all.where(customer_id: :id).order(:create_at)
+    @orders = Order.all.where(customer_id: params[:id]).order(:create_at)
   end
 
   def address_params
