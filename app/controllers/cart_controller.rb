@@ -8,9 +8,11 @@ class CartController < ApplicationController
   end
 
   def update_quantity
-    id = params[:id].to_s
+    if params[:quantity].present?
+      id = params[:id].to_s
+      session[:cart][id] = params[:quantity].to_i
+    end
 
-    session[:cart][id] = params[:quantity].to_i
     redirect_back(fallback_location: root_path)
   end
 

@@ -33,7 +33,7 @@
                         <%= submit_tag("Update", class: "button is-success is-size-6")%>
                     </td>
                     <% end %>
-                    <td colspan='2' class="has-text-centered is-size-5"><%= number_to_currency(pokemon.price) %></td>
+                    <td colspan='2' class="has-text-centered is-size-5"><%= number_to_currency((pokemon.price * session[:cart][pokemon.id.to_s])) %></td>
                     <td colspan='2' class="has-text-centered is-size-5">
                       <%= button_to remove_from_cart_path(pokemon.id), class: "button is-danger", method: :delete do %>
                         <%= image_tag("cart-remove.png", alt: "nav-cart") %> <p class="is-size-6">   Remove</p>
