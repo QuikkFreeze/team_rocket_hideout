@@ -57,7 +57,7 @@
               <tbody>
                 <tr>
                   <td class='is-size-5'>
-                    SubTotal
+                    Subtotal
                   </td>
                   <td class='is-size-5 has-text-centered'>
                     <%= number_to_currency(@sub_total) %>
@@ -67,12 +67,12 @@
             </table>
             <% if current_user.present? %>
               <% if current_user.address.present? %>
-                <%= button_to 'Proceed to Checkout', address_path(current_user.address.id), class: "button is-danger is-size-6", method: :get%>
+                <%= button_to 'Proceed to Checkout', checkout_path, class: "button is-danger is-size-6 is-fullwidth", method: :get%>
               <% else %>
-                <%= button_to 'Add Address To Purchase', new_address_path, class: "button is-danger is-size-6", method: :get%>
+                <%= button_to 'Add Address To Purchase', new_address_path, class: "button is-danger is-size-6 is-fullwidth", method: :get%>
               <% end %>
             <% else %>
-              <%= button_to 'Log In To Purchase', new_user_session_path, class: "button is-danger is-size-6", method: :get%>
+              <%= button_to 'Log In To Purchase', new_user_session_path, class: "button is-danger is-size-6 is-fullwidth", method: :get%>
             <% end %>
           </div>
         </div>

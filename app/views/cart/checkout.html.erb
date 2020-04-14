@@ -1,0 +1,85 @@
+<div class="container">
+  <h1 class="title">Checkout</h1>
+  <div class="columns">
+    <div class="column is-two-thirds">
+      <div class="box">
+        <table class="table is-fullwidth">
+          <thead>
+            <tr>
+              <th class="has-text-centered is-size-4" colspan='2'>Name</th>
+              <th class="has-text-centered is-size-4" colspan='2'>Price</th>
+              <th class="has-text-centered is-size-4" colspan='2'>Quantity</th>
+              <th class="has-text-centered is-size-4" colspan='2'>Total</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% @pokemons.each do |pokemon| %>
+              <tr>
+                <td colspan='2' class="has-text-centered is-size-5"><%= pokemon.name %></td>
+                <td colspan='2' class="has-text-centered is-size-5"><%= number_to_currency(pokemon.price) %></td>
+                <td colspan='2' class="has-text-centered is-size-5">
+                  <%= session[:cart][pokemon.id.to_s] %>
+                </td>
+                <td colspan='2' class="has-text-centered is-size-5"><%= number_to_currency((pokemon.price * session[:cart][pokemon.id.to_s])) %></td>
+                <td colspan='2' class="has-text-centered is-size-5"></td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div class="column">
+      <div class='box'>
+        <table class='table is-fullwidth'>
+          <thead>
+            <tr>
+              <th class="is-size-4" colspan='2'>Order Information</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <th class='is-size-5'>
+                Subtotal
+              </th>
+              <td class='is-size-5 has-text-centered'>
+                <%= number_to_currency(@sub_total) %>
+              </td>
+            </tr>
+            <tr>
+              <th class='is-size-5'>
+                Estimated GST
+              </th>
+              <td class='is-size-5 has-text-centered'>
+                <%= number_to_currency(@total_gst) %>
+              </td>
+            </tr>
+            <tr>
+              <th class='is-size-5'>
+                Estimated PST
+              </th>
+              <td class='is-size-5 has-text-centered'>
+                <%= number_to_currency(@total_pst)  %>
+              </td>
+            </tr>
+            <tr>
+              <th class='is-size-5'>
+                Estimated HST
+              </th>
+              <td class='is-size-5 has-text-centered'>
+                <%= number_to_currency(@total_hst)  %>
+              </td>
+            </tr>
+              <th class='is-size-5'>
+                Total
+              </th>
+              <td class='is-size-5 has-text-centered'>
+                <%= number_to_currency(@total) %>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+        <%= button_to 'Buy Now', process_order_path, class: "button is-danger is-size-6 is-fullwidth", method: :get%>
+      </div>
+    </div>
+  </div>
+</div>
