@@ -46,7 +46,7 @@
         <% if current_user %>
           <%= link_to "Sign Out", destroy_user_session_path, class: 'navbar-item', method: :delete %>
           <% if current_user.address.present? %>
-            <%= link_to "Edit Address", edit_address_path, class: 'navbar-item'%>
+            <%= link_to "View Address and Order Details", address_path(current_user.address.id), class: 'navbar-item'%>
           <% else %>
             <%= link_to "Add Address", new_address_path, class: 'navbar-item'%>
           <% end %>

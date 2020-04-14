@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class AddressesController < ApplicationController
-  before_action :set_address, only: %i[show edit update]
+  before_action :set_details, only: %i[show edit update]
 
   # GET /tests/1
   # GET /tests/1.json
@@ -49,8 +49,10 @@ class AddressesController < ApplicationController
 
   private
 
-  def set_address
+  def set_details
     @address = Address.find(params[:id])
+    @provinces = Province.all.order(:name)
+    @orders = Order.all.where(customer_id: :id).order(:create_at)
   end
 
   def address_params
