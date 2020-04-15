@@ -77,7 +77,7 @@ class CartController < ApplicationController
       @total_pst = @sub_total * @address.province.pst_rate
     else
       tax_rate = @address.province.hst_rate
-      @total_hst = @address.province.hst_rate
+      @total_hst = @sub_total * @address.province.hst_rate
     end
 
     @taxes = @sub_total * tax_rate
