@@ -42,14 +42,46 @@
         <% if @orders.any? %>
           <table class="table is-fullwidth">
             <thead>
-            <tr>
-              <th class="is-size-5">Date</th>
-              <th class="is-size-5">Pokémon</th>
-              <th class="is-size-5">Quantity</th>
-              <th class="is-size-5">Tax</th>
-              <th class="is-size-5">Total</th>
-            </tr>
+              <tr>
+                <th class="is-size-5">Order #</th>
+                <th class="is-size-5">Date</th>
+                <th class="is-size-5">Pokémon</th>
+                <th class="is-size-5">Tax</th>
+                <th class="is-size-5">Total</th>
+                <th class="is-size-5">Status</th>
+              </tr>
             </thead>
+            <tbody>
+              <% @orders.each do |order| %>
+                <tr>
+                  <td class="has-text-centered is-size-5"><%= order.id %></td>
+                  <td class="has-text-centered is-size-5"><%= (order.order_date).strftime("%B %d, %Y") %></td>
+                  <td>
+                    <table class="table">
+                      <thead>
+                        <tr>
+                          <th>Name</th>
+                          <th>Price</th>
+                          <th>Quantity</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <% order.pokemon_orders.each do |pokemon| %>
+                          <tr>
+                            <td class="is-size-6"><%= pokemon.pokemon.name %></td>
+                            <td class="is-size-6"><%= pokemon.price %></td>
+                            <td class="has-text-centered is-size-6"><%= pokemon.quantity %></td>
+                          </tr>
+                        <% end %>
+                      </tbody>
+                    </table>
+                  </td>
+                  <td class="has-text-centered is-size-5"><%= number_to_currency(order.total_tax) %></td>
+                  <td class="has-text-centered is-size-5"><%= number_to_currency(order.total_cost) %></td>
+                  <td class="has-text-centered is-size-5"><%= order.status %></td>
+                </tr>
+              <% end %>
+            </tbody>
           </table>
         <% else %>
           <p class="is-size-5">No orders found.</p>
