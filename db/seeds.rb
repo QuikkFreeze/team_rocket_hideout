@@ -102,6 +102,7 @@ pokemon_list.each do |pokemon|
       pokemon_description = pokedex_entry_table.at_css('tr:nth-last-child(2)').at_css('td').content
       break
     rescue StandardError
+      puts "Image cannot be found for #{pokemon_name}"
     end
   end
 
