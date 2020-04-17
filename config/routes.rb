@@ -24,6 +24,9 @@ Rails.application.routes.draw do
   post 'add_to_cart/:id', to: 'pokemon#add_to_cart', as: 'add_to_cart'
   delete 'remove_from_cart/:id', to: 'pokemon#remove_from_cart', as: 'remove_from_cart'
 
+  get 'cancel', to: 'cart#cancel', as: 'checkout_cancel'
+  get 'success', to: 'cart#success', as: 'checkout_success'
+
   get 'search', to: 'pokemon#search', as: 'search'
 
   get ':slug', to: 'page#slug', as: 'slug'

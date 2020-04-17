@@ -53,6 +53,10 @@ class CartController < ApplicationController
     redirect_to root_path
   end
 
+  def cancel; end
+
+  def success; end
+
   private
 
   def sub_total
