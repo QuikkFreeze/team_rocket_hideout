@@ -78,7 +78,7 @@
             </tr>
           </tbody>
         </table>
-        <%= button_to 'Buy Now', process_order_path, class: "button is-danger is-size-6 is-fullwidth", method: :get%>
+        <%= button_to 'Buy Now', process_order_path, class: "button is-danger is-size-6 is-fullwidth", method: :post, params: {id: current_user.id }, remote: true %>
       </div>
     </div>
   </div>
