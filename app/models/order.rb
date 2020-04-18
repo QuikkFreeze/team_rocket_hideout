@@ -3,7 +3,7 @@
 class Order < ApplicationRecord
   belongs_to :address, foreign_key: 'customer_id'
 
-  has_many :pokemon_orders
+  has_many :pokemon_orders, dependent: :destroy
   has_many :pokemons, through: :pokemon_orders
 
   validates :order_date, :total_cost, :total_tax, :status, presence: true
