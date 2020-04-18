@@ -66,7 +66,8 @@ class CartController < ApplicationController
         payment_method_types: ['card'],
         line_items: purchase_items,
         success_url: checkout_success_url,
-        cancel_url: checkout_cancel_url
+        cancel_url: checkout_cancel_url,
+        client_reference_id: @ord.id
       )
 
       respond_to do |format|
