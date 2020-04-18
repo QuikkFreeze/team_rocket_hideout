@@ -27,6 +27,10 @@ Rails.application.routes.draw do
   get 'cancel', to: 'cart#cancel', as: 'checkout_cancel'
   get 'success', to: 'cart#success', as: 'checkout_success'
 
+  namespace :stripe do
+    resources :charges, only: :create
+  end
+
   get 'search', to: 'pokemon#search', as: 'search'
 
   get ':slug', to: 'page#slug', as: 'slug'
