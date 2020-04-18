@@ -28,7 +28,9 @@ class CartController < ApplicationController
   def process_order
     checkout
 
-    ord = Order.create(
+    purchase_items = []
+
+    @ord = Order.create(
       customer_id: @address.id,
       order_date: DateTime.now,
       total_cost: @total,
@@ -36,21 +38,43 @@ class CartController < ApplicationController
       status: 'Unpaid'
     )
 
-    if ord.errors.any?
-      ord.errors.full_messages.each do |message|
+    if @ord.errors.any?
+      @ord.errors.full_messages.each do |message|
         puts message
       end
+    else
+
+      @pokemons.each do |poke|
+        qty = session[:cart][poke.id.to_s]
+
+        po = PokemonOrder.create(pokemon: poke, order: @ord, quantity: qty, price: poke.price)
+
+        price_cents = (po.price * 100).round
+
+        p_order = {
+          name: poke.name,
+          description: poke.description,
+          amount: price_cents,
+          currency: 'cad',
+          quantity: qty
+        }
+
+        purchase_items << p_order
+      end
+
+      @session = Stripe::Checkout::Session.create(
+        payment_method_types: ['card'],
+        line_items: purchase_items,
+        success_url: checkout_success_url,
+        cancel_url: checkout_cancel_url
+      )
+
+      respond_to do |format|
+        format.js
+      end
+
+      session[:cart] = {}
     end
-
-    @pokemons.each do |poke|
-      qty = session[:cart][poke.id.to_s]
-
-      PokemonOrder.create(pokemon: poke, order: ord, quantity: qty, price: poke.price)
-    end
-
-    session[:cart] = {}
-
-    redirect_to root_path
   end
 
   def cancel; end
@@ -75,19 +99,19 @@ class CartController < ApplicationController
 
     if @address.province.hst_rate == 0
       tax_rate += @address.province.gst_rate
-      @total_gst = @sub_total * @address.province.gst_rate
+      @total_gst = (@sub_total * @address.province.gst_rate).round(2)
 
       tax_rate += @address.province.pst_rate
-      @total_pst = @sub_total * @address.province.pst_rate
+      @total_pst = (@sub_total * @address.province.pst_rate).round(2)
     else
       tax_rate = @address.province.hst_rate
-      @total_hst = @sub_total * @address.province.hst_rate
+      @total_hst = (@sub_total * @address.province.hst_rate).round(2)
     end
 
-    @taxes = @sub_total * tax_rate
+    @taxes = (@sub_total * tax_rate).round(2)
   end
 
   def total
-    @total = @sub_total + @taxes
+    @total = (@sub_total + @taxes).round(2)
   end
 end
