@@ -1,0 +1,15 @@
+<h1 class="title">Payment Unsuccessful</h1>
+<div class="box">
+  <article class="media">
+    <div class="media-content">
+      <div class="content">
+        <p class="is-size-5">
+          Way to go. You failed paying for your order. You will never get it now.
+        </p>
+        <p class="is-size-5">
+          Click <%= link_to "Here", address_path(current_user.address.id)%> to view your orders.
+        </p>
+      </div>
+    </div>
+  </article>
+</div>
