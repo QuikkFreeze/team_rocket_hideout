@@ -1,8 +1,7 @@
 const stripe = Stripe('<%= Rails.configuration.stripe[:publishable_key] %>');
 
 stripe.redirectToCheckout({
-  sessionId: '<%= @session.id %>',
-  clientReferenceId: '<%= @ord.id %>'
+  sessionId: '<%= @session.id %>'
 }).then(function(result){
   alert(result.error.message);
 });
