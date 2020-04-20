@@ -50,9 +50,17 @@ class AddressesController < ApplicationController
   private
 
   def set_details
-    @address = Address.find(params[:id])
-    @provinces = Province.all.order(:name)
-    @orders = Order.all.includes(:pokemon_orders, :pokemons).where(customer_id: params[:id]).order(order_date: :desc)
+    if current_user.present?
+      if current_user.address.present?
+        @address = Address.find(params[:id])
+        @provinces = Province.all.order(:name)
+        @orders = Order.all.includes(:pokemon_orders, :pokemons).where(customer_id: params[:id]).order(order_date: :desc)
+      else
+        redirect_to root_path
+      end
+    else
+      redirect_to root_path
+    end
   end
 
   def address_params
