@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class CartController < ApplicationController
+  before_action :authenticate_user!, only: %i[process_order]
+
   def show
     checkout
   end
