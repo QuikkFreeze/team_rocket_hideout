@@ -2,9 +2,7 @@
 
 class CartController < ApplicationController
   def show
-    @pokemons = Pokemon.find(session[:cart].keys)
-
-    sub_total
+    checkout
   end
 
   def update_quantity
@@ -14,15 +12,6 @@ class CartController < ApplicationController
     end
 
     redirect_back(fallback_location: root_path)
-  end
-
-  def checkout
-    @pokemons = Pokemon.find(session[:cart].keys)
-    @address = current_user.address
-
-    sub_total
-    taxes
-    total
   end
 
   def process_order
@@ -83,6 +72,19 @@ class CartController < ApplicationController
   def success; end
 
   private
+
+  def checkout
+    @pokemons = Pokemon.find(session[:cart].keys)
+
+    @address = current_user.address if current_user.present?
+
+    sub_total
+
+    if @address.present?
+      taxes
+      total
+    end
+  end
 
   def sub_total
     @sub_total = 0
