@@ -78,7 +78,7 @@ pokemon_list.each do |pokemon|
   begin
     pokemon_image = basics_list.at_css('div').at_css('p').at_css('a').attribute('href').content
   rescue StandardError
-    puts 'Image not found.'
+    pokemon_image = 'https://i.ytimg.com/vi/EE-xtCF3T94/hqdefault.jpg'
   end
   # Grab the table with the pokedex data and the necessary table data
   pokemon_data_table = basics_list.at_css('div:nth-child(2)').at_css('table').at_css('tbody')
@@ -102,7 +102,7 @@ pokemon_list.each do |pokemon|
       pokemon_description = pokedex_entry_table.at_css('tr:nth-last-child(2)').at_css('td').content
       break
     rescue StandardError
-      puts "Image cannot be found for #{pokemon_name}"
+      puts "Description cannot be found for #{pokemon_name}"
     end
   end
 
